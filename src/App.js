@@ -1,27 +1,34 @@
-import logo from './logo.svg';
-import './App.css';
 import { useEffect, useState } from 'react';
+
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import LoginPage from './pages/LoginPage';
+import UserManagementPage from './pages/UserManagementPage';
+import AudioManagementPage from './pages/AudioManagementPage';
+
+import axios from 'axios';
+import Toolbar from './components/Toolbar';
 
 function App() {
   const [status, setStatus] = useState('');
+  const isLoggedIn = !!localStorage.getItem('token');
 
-  useEffect(() => {
-    fetch(`${process.env.REACT_APP_API_URL}/api/health`)
-      .then(res => res.json())
-      .then(data => setStatus(data.status))
-      .catch(err => setStatus('Error'));
-  }, []);
+useEffect(() => {
+  axios.get(`${process.env.REACT_APP_API_URL}/api/health`)
+    .then(res => console.log(res.data.status))
+    .catch(err => console.log('error'));
+}, []);
 
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <p>Backend health: {status}</p>
-      </header>
-    </div>
+    <Router>
+      <Toolbar />
+
+      <Routes>
+          <Route path="/login" element={<LoginPage />} />
+          <Route path="/users" element={<UserManagementPage />} />
+          <Route path="/audios" element={<AudioManagementPage />} />
+          <Route path="/" element={<LoginPage />} />
+      </Routes>
+    </Router>
   );
 }
 
