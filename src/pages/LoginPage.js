@@ -15,8 +15,8 @@ function LoginPage() {
       const data = await loginUser({ username, password });
       localStorage.setItem('token', data.token);
       setToken(data.token);
-      window.location.reload();
-
+      window.location.href = '/';
+      
     } catch (err) {
       setError(typeof err === 'string' ? err : 'Login failed');
     }

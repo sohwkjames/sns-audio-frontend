@@ -3,9 +3,8 @@ import { useAuth } from '../context/AuthContext';
 
 function Toolbar() {
   const { user, logout } = useAuth();
-  
+
   const isAdmin = user?.isAdmin;
-  console.log('user', user)
   return (
     <nav className="toolbar">
       {user && (

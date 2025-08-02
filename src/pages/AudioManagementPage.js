@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { fetchAudios, uploadAudio } from '../api/audios';
+import AudioRow from '../components/AudioRow';
 const CATEGORY_OPTIONS = ['Vocal', 'Instrumental', 'Ambient'];
 
 function AudioManagementPage() {
@@ -100,14 +101,21 @@ function AudioManagementPage() {
       <h4>Your Audio Files</h4>
       {audios.length === 0 && <p>No audio uploaded yet.</p>}
       {audios.map((audio) => (
-        <div key={audio.audio_id} style={{ marginBottom: '1.5em' }}>
-          <strong>{audio.title}</strong>
-          <p>{audio.category} — {audio.description}</p>
-          <audio controls>
-            <source src={`${process.env.REACT_APP_API_URL}/${audio.file_path}`} type="audio/mpeg" />
-            Your browser does not support the audio element.
-          </audio>
-        </div>
+        <AudioRow 
+          key={audio.audio_id} 
+          title={audio.title}
+          category={audio.category}
+          description={audio.description}
+          file_path={audio.file_path}
+        />
+        // <div key={audio.audio_id} style={{ marginBottom: '1.5em' }}>
+        //   <strong>{audio.title}</strong>
+        //   <p>{audio.category} — {audio.description}</p>
+        //   <audio controls>
+        //     <source src={`${process.env.REACT_APP_API_URL}/${audio.file_path}`} type="audio/mpeg" />
+        //     Your browser does not support the audio element.
+        //   </audio>
+        // </div>
       ))}
     </div>
   );
