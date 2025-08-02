@@ -15,14 +15,12 @@ function LoginPage() {
       const data = await loginUser({ username, password });
       localStorage.setItem('token', data.token);
       setToken(data.token);
+      window.location.reload();
+
     } catch (err) {
       setError(typeof err === 'string' ? err : 'Login failed');
     }
   };
-
-  if (token) {
-    return <p>Logged in as <strong>{username}</strong></p>;
-  }
 
   return (
     <form onSubmit={handleSubmit}>
